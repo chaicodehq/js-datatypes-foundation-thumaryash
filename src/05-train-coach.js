@@ -47,22 +47,38 @@
  *   isAnyWaitlisted(passengers)          // => true/false
  *   areAllConfirmed(passengers)          // => true/false
  */
+
+const passengers = [
+     { name: "Rahul", coach: "S5", seat: 42, status: "confirmed" },
+     { name: "Priya", coach: "S3", seat: 15, status: "waitlisted" }
+]
+ 
+
 export function findPassenger(passengers, name) {
-  // Your code here
+  if(!Array.isArray(passengers) || typeof name !== "string" || name.trim() === "") return undefined;
+  const lowerName = name.toLowerCase();
+  return passengers.find((passenger) => passenger.name.toLowerCase() === lowerName);
 }
 
 export function getPassengerIndex(passengers, name) {
-  // Your code here
+  if(!Array.isArray(passengers) || typeof name !== "string" || name.trim() === "") return -1;
+  const lowerName = name.toLowerCase();
+  return passengers.findIndex(passenger => passenger.name.toLowerCase() === lowerName);
 }
 
 export function isAnyWaitlisted(passengers) {
-  // Your code here
+  if(!Array.isArray(passengers)) return false;
+  return passengers.some(passenger => passenger.status === "waitlisted");
 }
 
 export function areAllConfirmed(passengers) {
-  // Your code here
+  if(!Array.isArray(passengers) || passengers.length === 0) return false;
+  return passengers.every(passenger => passenger.status === "confirmed");  //for empty array there are no elements, there is nothing wrong is every return true
 }
 
 export function getWaitlistedPassengers(passengers) {
-  // Your code here
+  if(!Array.isArray(passengers)) return [];
+  return passengers.filter(passenger => passenger.status === "waitlisted");
 }
+
+console.log(findPassenger(passengers, "rahul"));

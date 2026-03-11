@@ -46,17 +46,73 @@
  *   updatePrices({meetha:30, saada:20}, 10)              // => {meetha:40, saada:30}
  */
 export function createPaanOrder(basePaan, customizations) {
-  // Your code here
+  if(typeof basePaan !== 'object' || basePaan === null || Array.isArray(basePaan)) return {};
+
+  if(typeof customizations !== 'object' || customizations === null || Array.isArray(customizations)) {
+    return Object.assign({}, basePaan);
+  }
+
+  return Object.assign({}, basePaan, customizations);
+
+// Empty object {} banaya
+// basePaan ki properties copy hui
+// customizations ki properties copy hui (aur agar same key hai to override)
+
+// Result: new object banega 
+// basePaan mutate/change nahi hoga.
 }
 
 export function freezeMenu(menu) {
-  // Your code here
+    if(typeof menu !== 'object' || menu === null || Array.isArray(menu)) return {};
+    return Object.freeze(menu);
+// property change (X)
+
+// property add (X)
+
+// property delete (X)
+
+// NOTE: Object.freeze() new object nahi banata.
+// Ye same object ko immutable bana deta hai.
+
+// Object.freeze() shallow freeze karta hai.(Kyuki andar wala object freeze nahi hota (nested).)
+
+// for deep freeze:
+// function deepFreeze(obj) {
+//   // Agar object nahi hai ya null hai to direct return
+//   if (typeof obj !== "object" || obj === null) {
+//     return obj;
+//   }
+
+//   Object.keys(obj).forEach((key) => {
+//     deepFreeze(obj[key]); 
+//   });
+
+//   // Finally current object freeze karo
+//   return Object.freeze(obj);
+// }
 }
 
 export function updatePrices(menu, increase) {
-  // Your code here
+    if(typeof menu !== 'object' || menu === null || Array.isArray(menu) || typeof increase !== 'number') return {};
+
+    const keyValueArray = Object.entries(menu);
+    const updated = keyValueArray.map(([key, val]) => {
+        return [key, val + increase];
+    })
+
+    return Object.fromEntries(updated);
 }
 
 export function mergeDailySpecials(regularMenu, specialsMenu) {
-  // Your code here
+  if(typeof regularMenu !== 'object' || regularMenu === null || Array.isArray(regularMenu)) {
+    regularMenu = {};
+  }
+
+  if(typeof specialsMenu !== 'object' || specialsMenu === null || Array.isArray(specialsMenu)) {
+    specialsMenu = {};
+  }
+
+  return {...regularMenu, ...specialsMenu};
+
+//   NOTE: Spread operator aur Object.assign() both shallow copy / shallow merge karte hain(Not work on nested).
 }
